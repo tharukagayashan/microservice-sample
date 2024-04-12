@@ -1,0 +1,23 @@
+# Project exclude paths
+/actuator-admin-server/target/
+/course-center/target/
+/payment-center/target/
+/service-registry/target/
+/user-center/target/
+
+/*.log
+/*.log.*
+
+/actuator-admin-server/*.log
+/actuator-admin-server/*.log.*
+
+/course-center/*.log
+/course-center/*.log.*
+
+/payment-center/*.log
+/payment-center/*.log.*
+
+/user-center/*.log
+/user-center/*.log.*
+
+.idea/*
