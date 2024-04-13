@@ -1,6 +1,22 @@
 spring:
   application:
     name: API-GATEWAY
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: COURSE-CENTER
+            uri: lb://COURSE-CENTER
+            predicates:
+              - Path=/api/v1/course-center/**
+          - id: USER-CENTER
+            uri: lb://USER-CENTER
+            predicates:
+              - Path=/api/v1/user-center/**
+          - id: PAYMENT-CENTER
+            uri: lb://PAYMENT-CENTER
+            predicates:
+              - Path=/api/v1/payment-center/**
 
 eureka:
   instance:
