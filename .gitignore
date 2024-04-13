@@ -4,6 +4,7 @@
 /payment-center/target/
 /service-registry/target/
 /user-center/target/
+/api-gateway/target/
 
 /*.log
 /*.log.*
@@ -19,5 +20,8 @@
 
 /user-center/*.log
 /user-center/*.log.*
+
+/api-gateway/*.log
+/api-gateway/*.log.*
 
 .idea/*
