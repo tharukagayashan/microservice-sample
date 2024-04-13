@@ -20,4 +20,7 @@
 /user-center/*.log
 /user-center/*.log.*
 
+/api-gateway/*.log
+/api-gateway/*.log.*
+
 .idea/*

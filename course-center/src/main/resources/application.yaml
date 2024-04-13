@@ -1,6 +1,6 @@
 spring:
   application:
-    name: course-center
+    name: COURSE-CENTER
 
 eureka:
   instance:

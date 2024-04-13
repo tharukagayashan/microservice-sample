@@ -20,6 +20,7 @@
         <module>payment-center</module>
         <module>service-registry</module>
         <module>actuator-admin-server</module>
+        <module>api-gateway</module>
     </modules>
 
     <properties>

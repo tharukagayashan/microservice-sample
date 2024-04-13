@@ -1,6 +1,6 @@
 spring:
   application:
-    name: payment-center
+    name: PAYMENT-CENTER
 
 eureka:
   instance:

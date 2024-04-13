@@ -1,6 +1,6 @@
 spring:
   application:
-    name: actuator-admin-server
+    name: ACTUATOR-ADMIN-SERVER
 
 eureka:
   instance:
