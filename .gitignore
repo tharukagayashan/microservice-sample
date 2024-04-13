@@ -4,6 +4,7 @@
 /payment-center/target/
 /service-registry/target/
 /user-center/target/
+/api-gateway/target/
 
 /*.log
 /*.log.*
