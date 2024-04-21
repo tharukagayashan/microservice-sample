@@ -3,10 +3,10 @@ spring:
     name: COURSE-CENTER
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: 9926
-    url: jdbc:mysql://localhost:3306/course_center
-    name: course_center
+    username: ${COURSE_CENTER_SPRING_DATASOURCE_USERNAME}
+    password: ${COURSE_CENTER_SPRING_DATASOURCE_PASSWORD}
+    url: ${COURSE_CENTER_SPRING_DATASOURCE_URL}
+    name: ${COURSE_CENTER_SPRING_DATASOURCE_NAME}
   jpa:
     hibernate:
       ddl-auto: update

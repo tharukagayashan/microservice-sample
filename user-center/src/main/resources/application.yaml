@@ -2,10 +2,10 @@ spring:
   application:
     name: USER-CENTER
   datasource:
-    name: user_center_8978
-    username: user_center_8978_user
-    password: PX5gIBEzgx7bRWXAqZP5Dqedl6pc811B
-    url: jdbc:postgresql://dpg-coihtr8l5elc73d7ho30-a.oregon-postgres.render.com:5432/user_center_8978?currentSchema=user_center
+    name: ${USE_CENTER_SPRING_DATASOURCE_NAME}
+    username: ${USE_CENTER_SPRING_DATASOURCE_USERNAME}
+    password: ${USE_CENTER_SPRING_DATASOURCE_PASSWORD}
+    url: ${USE_CENTER_SPRING_DATASOURCE_URL}
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -16,8 +16,8 @@ eureka:
       management.context-path: ${server.servlet.context-path}/actuator
     prefer-ip-address: true
   client:
-    register-with-eureka: false
-    fetch-registry: false
+    register-with-eureka: true
+    fetch-registry: true
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
 
