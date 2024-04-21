@@ -25,3 +25,7 @@
 /api-gateway/*.log.*
 
 .idea/*
+
+/course-center/src/main/resources/application.yaml
+/payment-center/src/main/resources/application.yaml
+/user-center/src/main/resources/application.yaml
