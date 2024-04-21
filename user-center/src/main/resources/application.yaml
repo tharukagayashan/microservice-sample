@@ -2,10 +2,10 @@ spring:
   application:
     name: USER-CENTER
   datasource:
-    name: ${SPRING_DATASOURCE_NAME}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
-    url: ${SPRING_DATASOURCE_URL}
+    name: user_center_8978
+    username: user_center_8978_user
+    password: PX5gIBEzgx7bRWXAqZP5Dqedl6pc811B
+    url: jdbc:postgresql://dpg-coihtr8l5elc73d7ho30-a.oregon-postgres.render.com:5432/user_center_8978?currentSchema=user_center
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
