@@ -3,11 +3,11 @@ spring:
     name: PAYMENT-CENTER
   data:
     mongodb:
-      database: payment-center
-      host: localhost
-      port: 27017
-      password: root
-      username: root
+      database: ${PAYMENT_CENTER_SPRING_DATA_MONGODB_DATABASE}
+      host: ${PAYMENT_CENTER_SPRING_DATA_MONGODB_HOST}
+      port: ${PAYMENT_CENTER_SPRING_DATA_MONGODB_PORT}
+      password: ${PAYMENT_CENTER_SPRING_DATA_MONGODB_PASSWORD}
+      username: ${PAYMENT_CENTER_SPRING_DATA_MONGODB_USERNAME}
 
 eureka:
   instance:
