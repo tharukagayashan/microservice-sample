@@ -26,6 +26,6 @@
 
 .idea/*
 
-/course-center/src/main/resources/application.yaml
-/payment-center/src/main/resources/application.yaml
-/user-center/src/main/resources/application.yaml
+/course-center/src/main/resources/application.yml
+/payment-center/src/main/resources/application.yml
+/user-center/src/main/resources/application.yml
