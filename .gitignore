@@ -5,6 +5,7 @@
 /service-registry/target/
 /user-center/target/
 /api-gateway/target/
+/notification-center/target/
 
 /*.log
 /*.log.*
@@ -23,6 +24,12 @@
 
 /api-gateway/*.log
 /api-gateway/*.log.*
+
+/service-registry/*.log
+/service-registry/*.log.*
+
+/notification-center/*.log
+/notification-center/*.log.*
 
 .idea/*
 
