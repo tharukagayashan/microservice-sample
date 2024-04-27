@@ -15,12 +15,13 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>course-center</module>
-        <module>user-center</module>
-        <module>payment-center</module>
         <module>service-registry</module>
         <module>actuator-admin-server</module>
         <module>api-gateway</module>
+        <module>course-center</module>
+        <module>user-center</module>
+        <module>payment-center</module>
+        <module>notification-center</module>
     </modules>
 
     <properties>
