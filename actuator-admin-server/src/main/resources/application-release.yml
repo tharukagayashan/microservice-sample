@@ -11,7 +11,7 @@ eureka:
     fetchRegistry: ${EUREKA_CLIENT_FETCH_REGISTRY}
     registryFetchIntervalSeconds: ${EUREKA_CLIENT_REGISTRY_FETCH_INTERVAL_SECONDS}
     serviceUrl:
-      defaultZone: ${EUREKA_SERVER_DEFAULT_ZONE}
+      defaultZone: ${EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE}
 
 logging:
   file:

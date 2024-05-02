@@ -1,50 +1,8 @@
 spring:
   application:
     name: API-GATEWAY
-  cloud:
-    gateway:
-      mvc:
-        routes:
-          - id: COURSE-CENTER
-            uri: lb://COURSE-CENTER
-            predicates:
-              - Path=/api/v1/course-center/**
-          - id: USER-CENTER
-            uri: lb://USER-CENTER
-            predicates:
-              - Path=/api/v1/user-center/**
-          - id: PAYMENT-CENTER
-            uri: lb://PAYMENT-CENTER
-            predicates:
-              - Path=/api/v1/payment-center/**
-          - id: NOTIFICATION-CENTER
-            uri: lb://NOTIFICATION-CENTER
-            predicates:
-              - Path=/api/v1/notification-center/**
-
-eureka:
-  instance:
-    preferIpAddress: true
-    hostname: ${spring.application.name}
-  client:
-    registerWithEureka: true
-    fetchRegistry: true
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-
-logging:
-  file:
-    name: ${spring.application.name}.log
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: ALWAYS
-      enabled: true
+  profiles:
+    active: dev
 
 server:
   port: 8765
