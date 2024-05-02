@@ -1,38 +1,8 @@
 spring:
   application:
     name: USER-CENTER
-  datasource:
-    name: ${USE_CENTER_SPRING_DATASOURCE_NAME}
-    username: ${USE_CENTER_SPRING_DATASOURCE_USERNAME}
-    password: ${USE_CENTER_SPRING_DATASOURCE_PASSWORD}
-    url: ${USE_CENTER_SPRING_DATASOURCE_URL}
-    driver-class-name: org.postgresql.Driver
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-eureka:
-  instance:
-    hostname: ${spring.application.name}
-    metadata-map:
-      management.context-path: ${server.servlet.context-path}/actuator
-    prefer-ip-address: true
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: ALWAYS
-
-logging:
-  file:
-    name: ${spring.application.name}.log
+  profiles:
+    active: dev
 
 server:
   port: 8084

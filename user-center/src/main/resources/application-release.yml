@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    name: ${USER_CENTER_SPRING_DATASOURCE_NAME}
+    username: ${USER_CENTER_SPRING_DATASOURCE_USERNAME}
+    password: ${USER_CENTER_SPRING_DATASOURCE_PASSWORD}
+    url: ${USER_CENTER_SPRING_DATASOURCE_URL}
+    driver-class-name: ${USER_CENTER_SPRING_DATASOURCE_DRIVER_CLASS_NAME}
+  jpa:
+    database-platform: ${USER_CENTER_SPRING_JPA_DATABASE_PLATFORM}
+
+eureka:
+  instance:
+    hostname: ${EUREKA_INSTANCE_HOSTNAME}
+    metadata-map:
+      management.context-path: ${server.servlet.context-path}/actuator
+    prefer-ip-address: ${EUREKA_INSTANCE_PREFER_IP_ADDRESS}
+  client:
+    register-with-eureka: ${EUREKA_CLIENT_REGISTER_WITH_EUREKA}
+    fetch-registry: ${EUREKA_CLIENT_FETCH_REGISTRY}
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER_DEFAULT_ZONE}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+logging:
+  file:
+    name: ${spring.application.name}.log
