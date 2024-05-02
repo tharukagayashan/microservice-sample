@@ -1,33 +1,10 @@
 spring:
   application:
     name: NOTIFICATION-CENTER
-
-eureka:
-  instance:
-    hostname: ${spring.application.name}
-    metadata-map:
-      management.context-path: ${server.servlet.context-path}/actuator
-    prefer-ip-address: true
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+  profiles:
+    active: dev
 
 server:
   port: 8085
   servlet:
     context-path: /api/v1/notification-center
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: ALWAYS
-
-logging:
-  file:
-    name: ${spring.application.name}.log
