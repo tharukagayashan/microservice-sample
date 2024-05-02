@@ -1,43 +1,10 @@
 spring:
   application:
     name: COURSE-CENTER
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${COURSE_CENTER_SPRING_DATASOURCE_USERNAME}
-    password: ${COURSE_CENTER_SPRING_DATASOURCE_PASSWORD}
-    url: ${COURSE_CENTER_SPRING_DATASOURCE_URL}
-    name: ${COURSE_CENTER_SPRING_DATASOURCE_NAME}
-  jpa:
-    hibernate:
-      ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQL8Dialect
-
-eureka:
-  instance:
-    hostname: ${spring.application.name}
-    metadata-map:
-      management.context-path: ${server.servlet.context-path}/actuator
-    prefer-ip-address: true
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+  profiles:
+    active: dev
 
 server:
   port: 8082
   servlet:
     context-path: /api/v1/course-center
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: ALWAYS
-
-logging:
-  file:
-    name: ${spring.application.name}.log
