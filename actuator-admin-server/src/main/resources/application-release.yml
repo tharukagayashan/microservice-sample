@@ -1,0 +1,27 @@
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: ${EUREKA_INSTANCE_LEASE_RENEWAL_INTERVAL_IN_SECONDS}
+    health-check-url-path: /actuator/health
+    metadata-map:
+      startup: ${random.int}
+    hostname: ${EUREKA_INSTANCE_HOSTNAME}
+    prefer-ip-address: ${EUREKA_INSTANCE_PREFER_IP_ADDRESS}
+  client:
+    registerWithEureka: ${EUREKA_CLIENT_REGISTER_WITH_EUREKA}
+    fetchRegistry: ${EUREKA_CLIENT_FETCH_REGISTRY}
+    registryFetchIntervalSeconds: ${EUREKA_CLIENT_REGISTRY_FETCH_INTERVAL_SECONDS}
+    serviceUrl:
+      defaultZone: ${EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE}
+
+logging:
+  file:
+    name: ${spring.application.name}.log
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS

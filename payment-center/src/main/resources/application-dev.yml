@@ -1,0 +1,33 @@
+spring:
+  data:
+    mongodb:
+      database: payment-center
+      host: payment-center.n6pmcwl.mongodb.net
+      password: admin
+      username: admin
+      uri: mongodb+srv://admin:admin@payment-center.n6pmcwl.mongodb.net/payment-center?retryWrites=true&w=majority&appName=payment-center
+
+eureka:
+  instance:
+    hostname: ${spring.application.name}
+    metadata-map:
+      management.context-path: ${server.servlet.context-path}/actuator
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+logging:
+  file:
+    name: ${spring.application.name}.log
