@@ -1,41 +1,10 @@
 spring:
   application:
     name: PAYMENT-CENTER
-  data:
-    mongodb:
-      database: ${PAYMENT_CENTER_SPRING_DATA_MONGODB_DATABASE}
-      host: ${PAYMENT_CENTER_SPRING_DATA_MONGODB_HOST}
-      port: ${PAYMENT_CENTER_SPRING_DATA_MONGODB_PORT}
-      password: ${PAYMENT_CENTER_SPRING_DATA_MONGODB_PASSWORD}
-      username: ${PAYMENT_CENTER_SPRING_DATA_MONGODB_USERNAME}
-
-eureka:
-  instance:
-    hostname: ${spring.application.name}
-    metadata-map:
-      management.context-path: ${server.servlet.context-path}/actuator
-    prefer-ip-address: true
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-
+  profiles:
+    active: dev
 
 server:
   port: 8083
   servlet:
     context-path: /api/v1/payment-center
-
-logging:
-  file:
-    name: ${spring.application.name}.log
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: ALWAYS
