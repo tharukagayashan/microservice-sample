@@ -11,3 +11,24 @@
 /*.log.*
 
 .idea/*
+
+/actuator-admin-server/*.log
+/actuator-admin-server/*.log.*
+
+/course-center/*.log
+/course-center/*.log.*
+
+/payment-center/*.log
+/payment-center/*.log.*
+
+/user-center/*.log
+/user-center/*.log.*
+
+/api-gateway/*.log
+/api-gateway/*.log.*
+
+/service-registry/*.log
+/service-registry/*.log.*
+
+/notification-center/*.log
+/notification-center/*.log.*
