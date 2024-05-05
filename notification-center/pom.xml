@@ -68,6 +68,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>notification-center</finalName>
     </build>
 
 </project>
