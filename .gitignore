@@ -10,7 +10,7 @@
 /*.log
 /*.log.*
 
-/.idea/*
+/.idea
 
 /actuator-admin-server/*.log
 /actuator-admin-server/*.log.*
