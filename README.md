@@ -1,5 +1,6 @@
 # Microservice Sample Project
 
+* Notification Center
 * User Center
 * Course Center
 * Payment Center
