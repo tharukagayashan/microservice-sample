@@ -82,6 +82,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>course-center</finalName>
     </build>
 
 </project>
