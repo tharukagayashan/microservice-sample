@@ -9,15 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        - service: service-registry
-        - service: actuator-admin-server
-        - service: api-gateway
-        - service: notification-service
-        - service: user-service
-        - service: course-service
-        - service: payment-service
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 17
