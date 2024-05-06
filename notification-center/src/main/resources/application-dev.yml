@@ -22,3 +22,6 @@ management:
 logging:
   file:
     name: ${spring.application.name}.log
+
+
+# Kafka configuration
