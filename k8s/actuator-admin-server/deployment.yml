@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: actuator-admin-server
+  labels:
+    app: actuator-admin-server
+    type: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: backend
+      app: actuator-admin-server
+  template:
+    metadata:
+      name: actuator-admin-server
+      labels:
+        app: actuator-admin-server
+        type: backend
+    spec:
+      containers:
+        - name: actuator-admin-server
+          image: us.gcr.io/active-sun-419904/actuator-admin-server:v1
+          ports:
+            - containerPort: 9090
