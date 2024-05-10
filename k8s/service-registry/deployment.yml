@@ -23,28 +23,3 @@ spec:
           image: us.gcr.io/active-sun-419904/service-registry:v1
           ports:
             - containerPort: 8761
-          env:
-            - name: SPRING_PROFILES_ACTIVE
-              value: development
-            - name: SPRING_CLOUD_CONFIG_URI
-              value: http://config-server:8888
-            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
-              value: http://service-registry:8761/eureka
-          readinessProbe:
-            httpGet:
-              path: /actuator/health
-              port: 8761
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            timeoutSeconds: 5
-            successThreshold: 1
-            failureThreshold: 3
-          livenessProbe:
-            httpGet:
-              path: /actuator/health
-              port: 8761
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            timeoutSeconds: 5
-            successThreshold: 1
-            failureThreshold: 3
