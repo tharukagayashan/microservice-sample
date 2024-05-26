@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+  labels:
+    app: api-gateway
+    type: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: backend
+      app: api-gateway
+  template:
+    metadata:
+      name: api-gateway
+      labels:
+        app: api-gateway
+        type: backend
+    spec:
+      containers:
+        - name: api-gateway
+          image: us.gcr.io/active-sun-419904/api-gateway:v1
+          ports:
+            - containerPort: 8765

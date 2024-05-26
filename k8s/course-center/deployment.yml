@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: course-center
+  labels:
+    app: course-center
+    type: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: backend
+      app: course-center
+  template:
+    metadata:
+      name: course-center
+      labels:
+        app: course-center
+        type: backend
+    spec:
+      containers:
+        - name: course-center
+          image: us.gcr.io/active-sun-419904/course-center:v1
+          ports:
+            - containerPort: 8082
