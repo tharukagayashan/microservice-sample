@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-center
+  labels:
+    app: user-center
+    type: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: backend
+      app: user-center
+  template:
+    metadata:
+      name: user-center
+      labels:
+        app: user-center
+        type: backend
+    spec:
+      containers:
+        - name: user-center
+          image: us.gcr.io/active-sun-419904/user-center:v1
+          ports:
+            - containerPort: 9090

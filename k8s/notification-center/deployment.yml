@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-center
+  labels:
+    app: notification-center
+    type: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: backend
+      app: notification-center
+  template:
+    metadata:
+      name: notification-center
+      labels:
+        app: notification-center
+        type: backend
+    spec:
+      containers:
+        - name: notification-center
+          image: us.gcr.io/active-sun-419904/notification-center:v1
+          ports:
+            - containerPort: 9090
