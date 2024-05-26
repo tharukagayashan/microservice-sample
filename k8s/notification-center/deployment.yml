@@ -22,4 +22,4 @@ spec:
         - name: notification-center
           image: us.gcr.io/active-sun-419904/notification-center:v1
           ports:
-            - containerPort: 9090
+            - containerPort: 8085
