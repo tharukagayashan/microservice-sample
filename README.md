@@ -14,3 +14,5 @@
 * Eureka server
 * Redis
 * Kafka
+
+* K8 yml files
