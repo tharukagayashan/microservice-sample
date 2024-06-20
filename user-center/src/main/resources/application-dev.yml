@@ -7,6 +7,17 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+  cache:
+    type: redis
+  data:
+    redis:
+      host: localhost
+      port: 49154
+      database: 0
+      password:
+      timeout: 1000
+      url: redis://default:redispw@localhost:49154
+
 eureka:
   instance:
     hostname: ${spring.application.name}
