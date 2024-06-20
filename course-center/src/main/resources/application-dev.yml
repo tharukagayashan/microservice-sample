@@ -1,10 +1,10 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: sql6704201
-    password: H4JCveVxly
-    url: jdbc:mysql://sql6.freemysqlhosting.net:3306/sql6704201
-    name: sql6704201
+    username: avnadmin
+    password: AVNS_2ygEdQRw_tTEN6Ysj_5
+    url: jdbc:mysql://microservce-db-ft-ff4b.h.aivencloud.com:20569/defaultdb?user=avnadmin
+    name: defaultdb
   jpa:
     hibernate:
       ddl-auto: update
