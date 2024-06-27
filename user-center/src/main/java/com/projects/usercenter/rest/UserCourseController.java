@@ -3,6 +3,7 @@ package com.projects.usercenter.rest;
 import com.projects.usercenter.model.UserCourse;
 import com.projects.usercenter.service.UserCourseService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,7 @@ public class UserCourseController {
         return userCourseService.createCourseForUser(userCourse);
     }
 
+    @Cacheable(key = "#userId", value = "UserCourseCache")
     @GetMapping("/{userId}")
     public ResponseEntity<List<UserCourse>> getCourseForUser(@PathVariable Long userId) {
         log.info("UserCourseController : getCourseForUser() called");

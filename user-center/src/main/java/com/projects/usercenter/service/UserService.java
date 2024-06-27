@@ -26,11 +26,13 @@ public class UserService {
     public ResponseEntity<User> getUserById(Long userId) {
         log.info("UserService : getUserById() called");
         Optional<User> optUser = userRepository.findById(userId);
+        log.info("Get from DB");
         return optUser.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.ok(null));
     }
 
     public ResponseEntity<List<User>> getAllUsers() {
         log.info("UserService : getAllUsers() called");
+        log.info("Get from DB");
         return ResponseEntity.ok(userRepository.findAll());
     }
 }

@@ -7,13 +7,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "USER")
-public class User {
+@Table(name = "USERS")
+public class User implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 2161917454458987330L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
