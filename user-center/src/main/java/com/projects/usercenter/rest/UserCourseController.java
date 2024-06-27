@@ -26,7 +26,7 @@ public class UserCourseController {
         return userCourseService.createCourseForUser(userCourse);
     }
 
-    @Cacheable(key = "#userId",value = "UserCourseCache")
+    @Cacheable(key = "#userId", value = "UserCourseCache")
     @GetMapping("/{userId}")
     public ResponseEntity<List<UserCourse>> getCourseForUser(@PathVariable Long userId) {
         log.info("UserCourseController : getCourseForUser() called");
