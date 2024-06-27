@@ -14,7 +14,7 @@ spring:
   data:
     redis:
       host: localhost
-      port: 49153
+      port: 49154
       database: 0
       timeout: 1000
       url: redis://default:redispw@localhost:49154
