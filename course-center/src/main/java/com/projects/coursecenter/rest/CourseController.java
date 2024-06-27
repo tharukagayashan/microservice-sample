@@ -3,6 +3,7 @@ package com.projects.coursecenter.rest;
 import com.projects.coursecenter.model.Course;
 import com.projects.coursecenter.service.CourseService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,12 +19,14 @@ public class CourseController {
         this.courseService = courseService;
     }
 
+    @Cacheable(value = "CourseCache")
     @GetMapping
     public ResponseEntity<List<Course>> getAllCourses() {
         log.info("CourseController : getAllCourses() called");
         return courseService.getAllCourses();
     }
 
+    @Cacheable(key = "#courseId", value = "CourseCache")
     @GetMapping("/{courseId}")
     public ResponseEntity<Course> getCourseById(@PathVariable("courseId") Long courseId) {
         log.info("CourseController : getCourseById() called");

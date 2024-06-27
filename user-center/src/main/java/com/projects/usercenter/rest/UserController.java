@@ -3,6 +3,7 @@ package com.projects.usercenter.rest;
 import com.projects.usercenter.model.User;
 import com.projects.usercenter.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,11 +25,13 @@ public class UserController {
         return userService.createUser(user);
     }
 
+    @Cacheable(key = "#userId", value = "UserCache")
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable Long userId) {
         return userService.getUserById(userId);
     }
 
+    @Cacheable(value = "UserCache")
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         return userService.getAllUsers();

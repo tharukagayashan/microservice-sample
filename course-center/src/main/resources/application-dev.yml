@@ -14,11 +14,11 @@ spring:
   data:
     redis:
       host: localhost
-      port: 49154
+      port: 49153
       database: 0
-      password:
       timeout: 1000
       url: redis://default:redispw@localhost:49154
+      password: redispw
 
 eureka:
   instance:
