@@ -7,11 +7,10 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.2.4</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <groupId>com.projects</groupId>
-    <artifactId>microservice-parent</artifactId>
+    <artifactId>microservice-sample</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
@@ -29,7 +28,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.boot.dependencies.version>${parent.version}</spring.boot.dependencies.version>
+        <spring.boot.dependencies.version>${project.parent.version}</spring.boot.dependencies.version>
     </properties>
 
     <dependencyManagement>
