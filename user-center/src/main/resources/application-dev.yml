@@ -44,8 +44,3 @@ management:
 logging:
   file:
     name: ${spring.application.name}.log
-
-server:
-  port: 8084
-  servlet:
-    context-path: /api/v1/user-center
