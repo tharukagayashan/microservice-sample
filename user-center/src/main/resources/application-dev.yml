@@ -9,16 +9,6 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
-  cache:
-    type: redis
-  data:
-    redis:
-      host: localhost
-      port: 49154
-      database: 0
-      timeout: 1000
-      url: redis://default:redispw@localhost:49154
-      password: redispw
 
 eureka:
   instance:
