@@ -35,7 +35,7 @@ eureka:
 
 logging:
   file:
-    name: ${spring.application.name}.log
+    name: ./../logs/${spring.application.name}.log
 
 management:
   endpoints:
