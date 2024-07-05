@@ -9,6 +9,14 @@ spring:
     hibernate:
       ddl-auto: ${COURSE_CENTER_SPRING_JPA_HIBERNATE_DDL_AUTO}
     database-platform: ${COURSE_CENTER_SPRING_JPA_DATABASE_PLATFORM}
+  cache:
+    type: ${SPRING_CACHE_TYPE}
+  data:
+    redis:
+      host: ${SPRING_DATA_REDIS_HOST}
+      port: ${SPRING_DATA_REDIS_PORT}
+      database: ${SPRING_DATA_REDIS_DATABASE}
+      timeout: ${SPRING_DATA_REDIS_TIMEOUT}
 
 eureka:
   instance:

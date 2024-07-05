@@ -26,7 +26,7 @@ public class CourseController {
         return courseService.getAllCourses();
     }
 
-    @Cacheable(key = "#courseId", value = "CourseCache")
+    @Cacheable(value = "CourseCache",key = "#courseId")
     @GetMapping("/{courseId}")
     public ResponseEntity<Course> getCourseById(@PathVariable("courseId") Long courseId) {
         log.info("CourseController : getCourseById() called");

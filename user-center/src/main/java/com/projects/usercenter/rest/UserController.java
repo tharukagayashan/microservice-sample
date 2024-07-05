@@ -25,7 +25,7 @@ public class UserController {
         return userService.createUser(user);
     }
 
-    @Cacheable(key = "#userId", value = "UserCache")
+    @Cacheable(value = "UserCache",key = "#userId")
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable Long userId) {
         return userService.getUserById(userId);
