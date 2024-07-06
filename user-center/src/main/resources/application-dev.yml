@@ -43,3 +43,14 @@ management:
 logging:
   file:
     name: ./../logs/${spring.application.name}.log
+
+openapi:
+  service:
+    title: User Center
+    version: 1.0.0
+    url: ${server.servlet.context-path}
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html

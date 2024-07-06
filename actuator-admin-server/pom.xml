@@ -7,7 +7,7 @@
         <groupId>com.projects</groupId>
         <artifactId>microservice-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+        <relativePath></relativePath>
     </parent>
 
     <artifactId>actuator-admin-server</artifactId>
