@@ -35,7 +35,7 @@ eureka:
 
 logging:
   file:
-    name: ${spring.application.name}.log
+    name: ./../logs/${spring.application.name}.log
 
 management:
   endpoints:
@@ -46,3 +46,27 @@ management:
     health:
       show-details: ALWAYS
       enabled: true
+
+openapi:
+  service:
+    title: Swagger Documentation
+    version: 1.0.0
+    url: http://localhost:8765/v3/api-docs
+
+springdoc:
+  enable-native-support: true
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    config-url: /v3/api-docs/swagger-config
+    urls:
+      - url: /v3/api-docs
+        name: API Gateway Service
+      - url: /api/v1/course-center/v3/api-docs
+        name: Course Service
+      - url: /api/v1/user-center/v3/api-docs
+        name: User Service
+      - url: /api/v1/payment-center/v3/api-docs
+        name: Payment Service

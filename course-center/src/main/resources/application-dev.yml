@@ -41,4 +41,15 @@ management:
 
 logging:
   file:
-    name: ${spring.application.name}.log
+    name: ./../logs/${spring.application.name}.log
+
+openapi:
+  service:
+    title: Course Center
+    version: 1.0.0
+    url: ${server.servlet.context-path}
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
