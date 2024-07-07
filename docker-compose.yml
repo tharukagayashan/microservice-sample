@@ -1,0 +1,142 @@
+---
+version: '3'
+services:
+  #MySQL Docker Compose
+  mysql-course:
+    container_name: mysql-course
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: course_db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    volumes:
+      - ./mysql-course:/data/mysql
+    ports:
+      - "3306:3306"
+    restart: unless-stopped
+
+  #Postgres Docker Compose
+  postgres-user:
+    container_name: postgres-user
+    image: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: user_db
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - ./postgres-user:/data/postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  #MongoDB Docker Compose
+  mongodb-payment:
+    container_name: mongodb-payment
+    image: mongo
+    volumes:
+      - ./mongodb-payment:/data/mongodb
+    ports:
+      - "27017:27017"
+    restart: unless-stopped
+
+  #Redis Docker Compose
+  redis-cache:
+    container_name: redis-cache
+    image: redis
+    volumes:
+      - ./redis-cache:/data/redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+  #Eureka Server
+  discovery-server:
+    container_name: discovery-server
+    image: tharukagayashan/service-registry:latest
+    pull_policy: always
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+  #Actuator Admin Server
+  actuator-admin:
+    container_name: actuator-admin-server
+    image: tharukagayashan/actuator-admin-server:latest
+    pull_policy: always
+    ports:
+      - "9090:9090"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - discovery-server
+
+  #API Gateway
+  api-gateway:
+    container_name: api-gateway
+    image: tharukagayashan/api-gateway:latest
+    pull_policy: always
+    ports:
+      - "8765:8765"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY=TRACE
+    depends_on:
+      - discovery-server
+
+  #User Center
+  user-center:
+    container_name: user-center
+    image: tharukagayashan/user-center:latest
+    pull_policy: always
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - discovery-server
+      - postgres-user
+      - api-gateway
+
+  #Course Center
+  course-center:
+    container_name: course-center
+    image: tharukagayashan/course-center:latest
+    pull_policy: always
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - discovery-server
+      - mysql-course
+      - api-gateway
+
+  #Payment Center
+  payment-center:
+    container_name: payment-center
+    image: tharukagayashan/payment-center:latest
+    pull_policy: always
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - discovery-server
+      - mongodb-payment
+      - api-gateway
+
+  #Notification Center
+  notification-center:
+    container_name: notification-center
+    image: tharukagayashan/notification-center:latest
+    pull_policy: always
+    ports:
+      - "8085:8085"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - discovery-server
+      - api-gateway
