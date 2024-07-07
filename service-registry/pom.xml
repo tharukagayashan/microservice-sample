@@ -7,7 +7,6 @@
         <groupId>com.projects</groupId>
         <artifactId>microservice-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath></relativePath>
     </parent>
 
     <artifactId>service-registry</artifactId>
@@ -30,6 +29,15 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+
+
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -48,6 +56,19 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.2.1</version>
+                <configuration>
+                    <from>
+                        <image>eclipse-temurin:17-jre</image>
+                    </from>
+                    <to>
+                        <image>registry.hub.docker.com/tharukagayashan/${project.artifactId}</image>
+                    </to>
+                </configuration>
             </plugin>
         </plugins>
         <finalName>service-registry</finalName>
