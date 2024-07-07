@@ -95,6 +95,7 @@ services:
       - "8084:8084"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-user:5432/user_db
     depends_on:
       - discovery-server
       - postgres-user
@@ -109,6 +110,7 @@ services:
       - "8082:8082"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-course:3306/course_db
     depends_on:
       - discovery-server
       - mysql-course
