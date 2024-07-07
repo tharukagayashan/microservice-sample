@@ -2,44 +2,44 @@
 version: '3'
 services:
   #MySQL Docker Compose
-  mysql-course:
-    container_name: mysql-course
-    image: mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: course_db
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-    volumes:
-      - ./mysql-course:/data/mysql
-    ports:
-      - "3306:3306"
-    restart: unless-stopped
+#  mysql-course:
+#    container_name: mysql-course
+#    image: mysql
+#    environment:
+#      MYSQL_ROOT_PASSWORD: root
+#      MYSQL_DATABASE: course_db
+#      MYSQL_USER: root
+#      MYSQL_PASSWORD: root
+#    volumes:
+#      - ./mysql-course:/data/mysql
+#    ports:
+#      - "3306:3306"
+#    restart: unless-stopped
 
   #Postgres Docker Compose
-  postgres-user:
-    container_name: postgres-user
-    image: postgres
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: user_db
-      PGDATA: /var/lib/postgresql/data
-    volumes:
-      - ./postgres-user:/data/postgres
-    ports:
-      - "5432:5432"
-    restart: unless-stopped
+#  postgres-user:
+#    container_name: postgres-user
+#    image: postgres
+#    environment:
+#      POSTGRES_USER: root
+#      POSTGRES_PASSWORD: root
+#      POSTGRES_DB: user_db
+#      PGDATA: /var/lib/postgresql/data
+#    volumes:
+#      - ./postgres-user:/data/postgres
+#    ports:
+#      - "5432:5432"
+#    restart: unless-stopped
 
   #MongoDB Docker Compose
-  mongodb-payment:
-    container_name: mongodb-payment
-    image: mongo
-    volumes:
-      - ./mongodb-payment:/data/mongodb
-    ports:
-      - "27017:27017"
-    restart: unless-stopped
+#  mongodb-payment:
+#    container_name: mongodb-payment
+#    image: mongo
+#    volumes:
+#      - ./mongodb-payment:/data/mongodb
+#    ports:
+#      - "27017:27017"
+#    restart: unless-stopped
 
   #Redis Docker Compose
   redis-cache:
@@ -95,7 +95,7 @@ services:
       - "8084:8084"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-user:5432/user_db
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://dpg-coihtr8l5elc73d7ho30-a.oregon-postgres.render.com:5432/user_center_8978
     depends_on:
       - discovery-server
       - postgres-user
@@ -110,7 +110,7 @@ services:
       - "8082:8082"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-course:3306/course_db
+      - SPRING_DATASOURCE_URL=jdbc:mysql://microservce-db-ft-ff4b.h.aivencloud.com:20569/defaultdb?user=avnadmin
     depends_on:
       - discovery-server
       - mysql-course
