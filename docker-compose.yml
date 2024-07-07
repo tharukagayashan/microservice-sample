@@ -1,4 +1,3 @@
----
 version: '3'
 services:
   #MySQL Docker Compose
@@ -59,7 +58,9 @@ services:
     ports:
       - "8761:8761"
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+    networks:
+      - eureka-network
 
   #Actuator Admin Server
   actuator-admin:
@@ -69,9 +70,11 @@ services:
     ports:
       - "9090:9090"
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
     depends_on:
       - discovery-server
+    networks:
+      - eureka-network
 
   #API Gateway
   api-gateway:
@@ -81,10 +84,12 @@ services:
     ports:
       - "8765:8765"
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
       - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY=TRACE
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
     depends_on:
       - discovery-server
+    networks:
+      - eureka-network
 
   #User Center
   user-center:
@@ -94,12 +99,15 @@ services:
     ports:
       - "8084:8084"
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
       - SPRING_DATASOURCE_URL=jdbc:postgresql://dpg-coihtr8l5elc73d7ho30-a.oregon-postgres.render.com:5432/user_center_8978
+      - SPRING_DATASOURCE_USERNAME=user_center_8978_user
+      - SPRING_DATASOURCE_PASSWORD=PX5gIBEzgx7bRWXAqZP5Dqedl6pc811B
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
     depends_on:
       - discovery-server
-      - postgres-user
       - api-gateway
+    networks:
+      - eureka-network
 
   #Course Center
   course-center:
@@ -109,12 +117,15 @@ services:
     ports:
       - "8082:8082"
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
       - SPRING_DATASOURCE_URL=jdbc:mysql://microservce-db-ft-ff4b.h.aivencloud.com:20569/defaultdb?user=avnadmin
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - SPRING_DATASOURCE_USERNAME=avnadmin
+      - SPRING_DATASOURCE_PASSWORD=AVNS_2ygEdQRw_tTEN6Ysj_5
     depends_on:
       - discovery-server
-      - mysql-course
       - api-gateway
+    networks:
+      - eureka-network
 
   #Payment Center
   payment-center:
@@ -124,11 +135,12 @@ services:
     ports:
       - "8083:8083"
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
     depends_on:
       - discovery-server
-      - mongodb-payment
       - api-gateway
+    networks:
+      - eureka-network
 
   #Notification Center
   notification-center:
@@ -138,10 +150,12 @@ services:
     ports:
       - "8085:8085"
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
     depends_on:
       - discovery-server
       - api-gateway
+    networks:
+      - eureka-network
 
   #Prometheus
   prometheus:
@@ -150,7 +164,7 @@ services:
     ports:
       - "9091:9090"
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
     depends_on:
@@ -159,6 +173,8 @@ services:
       - payment-center
       - notification-center
     restart: unless-stopped
+    networks:
+      - eureka-network
 
   #Grafana
   grafana:
@@ -174,3 +190,9 @@ services:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
     restart: unless-stopped
+    networks:
+      - eureka-network
+
+networks:
+  eureka-network:
+    driver: bridge

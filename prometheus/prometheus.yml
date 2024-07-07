@@ -30,3 +30,17 @@ scrape_configs:
       - targets: ['notification-center:8085']
         labels:
           application: 'Notification Center Application'
+
+  - job_name: 'api-gateway'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['api-gateway:8765']
+        labels:
+          application: 'API Gateway Application'
+
+  - job_name: 'admin-server'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['actuator-admin-server:9090']
+        labels:
+          application: 'Admin Server Application'
