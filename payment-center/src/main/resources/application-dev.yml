@@ -5,7 +5,7 @@ spring:
       host: localhost
       password: user123
       username: user
-      uri: mongodb://user:user123@localhost:27017/payment_db?authSource=admin
+      uri: mongodb://user:user123@payment-mongodb-db:27017/payment_db?authSource=admin
 
 eureka:
   instance:
