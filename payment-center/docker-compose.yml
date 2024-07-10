@@ -1,0 +1,15 @@
+#MongoDB Docker Compose
+version: '3'
+services:
+  payment-mongodb-db:
+    image: mongo
+    container_name: payment-mongodb-db
+    environment:
+      MONGO_INITDB_DATABASE: payment_db
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: user123
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/var/lib/payment-mongodb-db
+    restart: unless-stopped
