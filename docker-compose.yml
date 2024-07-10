@@ -48,7 +48,7 @@ services:
     container_name: redis-cache
     image: redis
     volumes:
-      - ./redis-cache:/data/redis
+      - ./data/redis-cache:/data/redis
     ports:
       - "6379:6379"
     restart: unless-stopped
