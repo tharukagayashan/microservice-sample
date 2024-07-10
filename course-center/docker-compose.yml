@@ -12,5 +12,5 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./data:/var/lib/course-mysql-db
+      - ../data/mysql:/var/lib/course-mysql-db
     restart: unless-stopped

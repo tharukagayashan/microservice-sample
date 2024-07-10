@@ -11,5 +11,5 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - ./data:/var/lib/payment-mongodb-db
+      - ../data/mongodb:/var/lib/payment-mongodb-db
     restart: unless-stopped

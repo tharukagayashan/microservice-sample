@@ -9,7 +9,7 @@
 
 /*.log
 /*.log.*
-/logs/*.log
+/data/logs/*.log
 
 /.idea
 

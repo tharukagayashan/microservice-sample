@@ -113,6 +113,8 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://user-postgresql-db:5432/user_db?useSSL=false
       - SPRING_DATASOURCE_USERNAME=user
       - SPRING_DATASOURCE_PASSWORD=user123
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.PostgreSQLDialect
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
       - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=*
       - MANAGEMENT_ENDPOINT_HEALTH_SHOW-DETAILS=ALWAYS
@@ -136,6 +138,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://course-mysql-db:3306/course-db?user=user
       - SPRING_DATASOURCE_USERNAME=user
       - SPRING_DATASOURCE_PASSWORD=user123
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.MySQLDialect
       - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=*
       - MANAGEMENT_ENDPOINT_HEALTH_SHOW-DETAILS=ALWAYS
     depends_on:
