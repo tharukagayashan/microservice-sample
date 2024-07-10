@@ -31,14 +31,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-registry-prometheus</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-
-
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -67,7 +59,7 @@
                         <image>eclipse-temurin:17-jre</image>
                     </from>
                     <to>
-                        <image>tharukagayashan/registry.hub.docker.com/${project.artifactId}</image>
+                        <image>registry.hub.docker.com/tharukagayashan/${project.artifactId}</image>
                     </to>
                 </configuration>
             </plugin>
