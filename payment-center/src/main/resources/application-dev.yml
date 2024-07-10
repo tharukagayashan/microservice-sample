@@ -1,11 +1,11 @@
 spring:
   data:
     mongodb:
-      database: payment-db
-      host: localhost:27017
+      database: payment_db
+      host: localhost
       password: user123
       username: user
-      uri: mongodb://user:user123@localhost:27017/payment-db
+      uri: mongodb://user:user123@localhost:27017/payment_db?authSource=admin
 
 eureka:
   instance:
