@@ -39,6 +39,7 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+      enabled: true
 
 logging:
   file:

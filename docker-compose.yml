@@ -1,8 +1,8 @@
 version: '3'
 services:
-  #MySQL Docker Compose
+  # MySQL Docker Compose
   course-mysql-db:
-    image: mysql
+    image: mysql:latest
     container_name: course-mysql-db
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -12,12 +12,14 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./data:/var/lib/course-mysql-db
+      - ./data/mysql:/var/lib/mysql
     restart: unless-stopped
+    networks:
+      - eureka-network
 
-  #Postgres Docker Compose
+  # Postgres Docker Compose
   user-postgresql-db:
-    image: postgres
+    image: postgres:latest
     container_name: user-postgresql-db
     environment:
       POSTGRES_DB: user_db
@@ -26,12 +28,14 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./data:/var/lib/user-postgresql-db
+      - ./data/postgres:/var/lib/postgresql/data
     restart: unless-stopped
+    networks:
+      - eureka-network
 
-  #MongoDB Docker Compose
+  # MongoDB Docker Compose
   payment-mongodb-db:
-    image: mongo
+    image: mongo:latest
     container_name: payment-mongodb-db
     environment:
       MONGO_INITDB_DATABASE: payment_db
@@ -40,26 +44,28 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - ./data:/var/lib/payment-mongodb-db
+      - ./data/mongo:/data/db
     restart: unless-stopped
+    networks:
+      - eureka-network
 
-  #Redis Docker Compose
+  # Redis Docker Compose
   redis-cache:
     container_name: redis-cache
-    image: redis
+    image: redis:latest
     volumes:
-      - ./data/redis-cache:/data/redis
+      - ./data/redis:/data
     ports:
       - "6379:6379"
     restart: unless-stopped
+    networks:
+      - eureka-network
 
-  #Eureka Server
+  # Eureka Server
   discovery-server:
     container_name: discovery-server
-    image: registry.hub.docker.com/tharukagayashan/service-registry:latest
+    image: tharukagayashan/service-registry:latest
     pull_policy: always
-    expose:
-      - "8761"
     ports:
       - "8761:8761"
     environment:
@@ -67,13 +73,11 @@ services:
     networks:
       - eureka-network
 
-  #Actuator Admin Server
+  # Actuator Admin Server
   actuator-admin:
     container_name: actuator-admin-server
-    image: registry.hub.docker.com/tharukagayashan/actuator-admin-server:latest
+    image: tharukagayashan/actuator-admin-server:latest
     pull_policy: always
-    expose:
-      - "9090"
     ports:
       - "9090:9090"
     environment:
@@ -83,13 +87,11 @@ services:
     networks:
       - eureka-network
 
-  #API Gateway
+  # API Gateway
   api-gateway:
     container_name: api-gateway
-    image: registry.hub.docker.com/tharukagayashan/api-gateway:latest
+    image: tharukagayashan/api-gateway:latest
     pull_policy: always
-    expose:
-      - "8765"
     ports:
       - "8765:8765"
     environment:
@@ -100,17 +102,15 @@ services:
     networks:
       - eureka-network
 
-  #User Center
+  # User Center
   user-center:
     container_name: user-center
-    image: registry.hub.docker.com/tharukagayashan/user-center:latest
+    image: tharukagayashan/user-center:latest
     pull_policy: always
-    expose:
-      - "8084"
     ports:
       - "8084:8084"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://user-postgresql-db:5432/user_db?useSSL=false
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://user-postgresql-db:5432/user_db
       - SPRING_DATASOURCE_USERNAME=user
       - SPRING_DATASOURCE_PASSWORD=user123
       - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
@@ -118,42 +118,40 @@ services:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
       - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=*
       - MANAGEMENT_ENDPOINT_HEALTH_SHOW-DETAILS=ALWAYS
+      - SPRING_REDIS_HOST=redis-cache
     depends_on:
       - discovery-server
       - api-gateway
     networks:
       - eureka-network
 
-  #Course Center
+  # Course Center
   course-center:
     container_name: course-center
-    image: registry.hub.docker.com/tharukagayashan/course-center:latest
+    image: tharukagayashan/course-center:latest
     pull_policy: always
-    expose:
-      - "8082"
     ports:
       - "8082:8082"
     environment:
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
-      - SPRING_DATASOURCE_URL=jdbc:mysql://course-mysql-db:3306/course-db?user=user
+      - SPRING_DATASOURCE_URL=jdbc:mysql://course-mysql-db:3306/course_db
       - SPRING_DATASOURCE_USERNAME=user
       - SPRING_DATASOURCE_PASSWORD=user123
       - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.MySQLDialect
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
       - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=*
       - MANAGEMENT_ENDPOINT_HEALTH_SHOW-DETAILS=ALWAYS
+      - SPRING_REDIS_HOST=redis-cache
     depends_on:
       - discovery-server
       - api-gateway
     networks:
       - eureka-network
 
-  #Payment Center
+  # Payment Center
   payment-center:
     container_name: payment-center
-    image: registry.hub.docker.com/tharukagayashan/payment-center:latest
+    image: tharukagayashan/payment-center:latest
     pull_policy: always
-    expose:
-      - "8083"
     ports:
       - "8083:8083"
     environment:
@@ -162,21 +160,17 @@ services:
       - MANAGEMENT_ENDPOINT_HEALTH_SHOW-DETAILS=ALWAYS
       - SPRING_DATA_MONGODB_URI=mongodb://user:user123@payment-mongodb-db:27017/payment_db?authSource=admin
       - SPRING_DATA_MONGODB_DATABASE=payment_db
-      - SPRING_DATA_MONGODB_USERNAME=user
-      - SPRING_DATA_MONGODB_PASSWORD=user123
     depends_on:
       - discovery-server
       - api-gateway
     networks:
       - eureka-network
 
-  #Notification Center
+  # Notification Center
   notification-center:
     container_name: notification-center
-    image: registry.hub.docker.com/tharukagayashan/notification-center:latest
+    image: tharukagayashan/notification-center:latest
     pull_policy: always
-    expose:
-      - "8085"
     ports:
       - "8085:8085"
     environment:
@@ -189,21 +183,21 @@ services:
     networks:
       - eureka-network
 
-  #Prometheus
+  # Prometheus
   prometheus:
     container_name: prometheus
-    image: prom/prometheus
+    image: prom/prometheus:latest
     ports:
       - "9091:9090"
     volumes:
       - ./data/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
-    depends_on:
-      - user-center
-      - course-center
-      - payment-center
-      - notification-center
+#    depends_on:
+#      - user-center
+#      - course-center
+#      - payment-center
+#      - notification-center
     restart: unless-stopped
     networks:
       - eureka-network
@@ -211,7 +205,7 @@ services:
   # Grafana
   grafana:
     container_name: grafana
-    image: grafana/grafana
+    image: grafana/grafana:latest
     ports:
       - "3000:3000"
     links:
