@@ -1,176 +1,216 @@
----
 version: '3'
 services:
-  #MySQL Docker Compose
-#  mysql-course:
-#    container_name: mysql-course
-#    image: mysql
-#    environment:
-#      MYSQL_ROOT_PASSWORD: root
-#      MYSQL_DATABASE: course_db
-#      MYSQL_USER: root
-#      MYSQL_PASSWORD: root
-#    volumes:
-#      - ./mysql-course:/data/mysql
-#    ports:
-#      - "3306:3306"
-#    restart: unless-stopped
+  # MySQL Docker Compose
+  course-mysql-db:
+    image: mysql:latest
+    container_name: course-mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: course_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user123
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    restart: unless-stopped
+    networks:
+      - eureka-network
 
-  #Postgres Docker Compose
-#  postgres-user:
-#    container_name: postgres-user
-#    image: postgres
-#    environment:
-#      POSTGRES_USER: root
-#      POSTGRES_PASSWORD: root
-#      POSTGRES_DB: user_db
-#      PGDATA: /var/lib/postgresql/data
-#    volumes:
-#      - ./postgres-user:/data/postgres
-#    ports:
-#      - "5432:5432"
-#    restart: unless-stopped
+  # Postgres Docker Compose
+  user-postgresql-db:
+    image: postgres:latest
+    container_name: user-postgresql-db
+    environment:
+      POSTGRES_DB: user_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: user123
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - eureka-network
 
-  #MongoDB Docker Compose
-#  mongodb-payment:
-#    container_name: mongodb-payment
-#    image: mongo
-#    volumes:
-#      - ./mongodb-payment:/data/mongodb
-#    ports:
-#      - "27017:27017"
-#    restart: unless-stopped
+  # MongoDB Docker Compose
+  payment-mongodb-db:
+    image: mongo:latest
+    container_name: payment-mongodb-db
+    environment:
+      MONGO_INITDB_DATABASE: payment_db
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: user123
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/mongo:/data/db
+    restart: unless-stopped
+    networks:
+      - eureka-network
 
-  #Redis Docker Compose
+  # Redis Docker Compose
   redis-cache:
     container_name: redis-cache
-    image: redis
+    image: redis:latest
     volumes:
-      - ./redis-cache:/data/redis
+      - ./data/redis:/data
     ports:
       - "6379:6379"
     restart: unless-stopped
+    networks:
+      - eureka-network
 
-  #Eureka Server
+  # Eureka Server
   discovery-server:
     container_name: discovery-server
-    image: tharukagayashan/service-registry:latest
+    image: registry.hub.docker.com/tharukagayashan/service-registry:latest
     pull_policy: always
     ports:
       - "8761:8761"
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+    networks:
+      - eureka-network
 
-  #Actuator Admin Server
+  # Actuator Admin Server
   actuator-admin:
     container_name: actuator-admin-server
-    image: tharukagayashan/actuator-admin-server:latest
+    image: registry.hub.docker.com/tharukagayashan/actuator-admin-server:latest
     pull_policy: always
     ports:
       - "9090:9090"
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
     depends_on:
       - discovery-server
+    networks:
+      - eureka-network
 
-  #API Gateway
+  # API Gateway
   api-gateway:
     container_name: api-gateway
-    image: tharukagayashan/api-gateway:latest
+    image: registry.hub.docker.com/tharukagayashan/api-gateway:latest
     pull_policy: always
     ports:
       - "8765:8765"
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
       - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY=TRACE
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
     depends_on:
       - discovery-server
+    networks:
+      - eureka-network
 
-  #User Center
+  # User Center
   user-center:
     container_name: user-center
-    image: tharukagayashan/user-center:latest
+    image: registry.hub.docker.com/tharukagayashan/user-center:latest
     pull_policy: always
     ports:
       - "8084:8084"
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://dpg-coihtr8l5elc73d7ho30-a.oregon-postgres.render.com:5432/user_center_8978
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://user-postgresql-db:5432/user_db
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=user123
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.PostgreSQLDialect
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - SPRING_DATA_REDIS_HOST=redis-cache
     depends_on:
       - discovery-server
-      - postgres-user
       - api-gateway
+    networks:
+      - eureka-network
 
-  #Course Center
+  # Course Center
   course-center:
     container_name: course-center
-    image: tharukagayashan/course-center:latest
+    image: registry.hub.docker.com/tharukagayashan/course-center:latest
     pull_policy: always
     ports:
       - "8082:8082"
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - SPRING_DATASOURCE_URL=jdbc:mysql://microservce-db-ft-ff4b.h.aivencloud.com:20569/defaultdb?user=avnadmin
+      - SPRING_DATASOURCE_URL=jdbc:mysql://course-mysql-db:3306/course_db
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=user123
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.MySQLDialect
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - SPRING_DATA_REDIS_HOST=redis-cache
     depends_on:
       - discovery-server
-      - mysql-course
       - api-gateway
+    networks:
+      - eureka-network
 
-  #Payment Center
+  # Payment Center
   payment-center:
     container_name: payment-center
-    image: tharukagayashan/payment-center:latest
+    image: registry.hub.docker.com/tharukagayashan/payment-center:latest
     pull_policy: always
     ports:
       - "8083:8083"
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - SPRING_DATA_MONGODB_URI=mongodb://user:user123@payment-mongodb-db:27017/payment_db?authSource=admin
+      - SPRING_DATA_MONGODB_DATABASE=payment_db
     depends_on:
       - discovery-server
-      - mongodb-payment
       - api-gateway
+    networks:
+      - eureka-network
 
-  #Notification Center
+  # Notification Center
   notification-center:
     container_name: notification-center
-    image: tharukagayashan/notification-center:latest
+    image: registry.hub.docker.com/tharukagayashan/notification-center:latest
     pull_policy: always
     ports:
       - "8085:8085"
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=*
+      - MANAGEMENT_ENDPOINT_HEALTH_SHOW-DETAILS=ALWAYS
     depends_on:
       - discovery-server
       - api-gateway
+    networks:
+      - eureka-network
 
-  #Prometheus
+  # Prometheus
   prometheus:
     container_name: prometheus
-    image: prom/prometheus
+    image: prom/prometheus:latest
     ports:
       - "9091:9090"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-    depends_on:
-      - user-center
-      - course-center
-      - payment-center
-      - notification-center
+#    depends_on:
+#      - user-center
+#      - course-center
+#      - payment-center
+#      - notification-center
     restart: unless-stopped
+    networks:
+      - eureka-network
 
-  #Grafana
+  # Grafana
   grafana:
     container_name: grafana
-    image: grafana/grafana
+    image: grafana/grafana:latest
     ports:
       - "3000:3000"
     links:
       - prometheus:prometheus
     volumes:
-      - ./grafana:/var/lib/grafana
+      - ./data/grafana:/var/lib/grafana
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
     restart: unless-stopped
+    networks:
+      - eureka-network
+
+networks:
+  eureka-network:
+    driver: bridge

@@ -1,14 +1,15 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: avnadmin
-    password: AVNS_2ygEdQRw_tTEN6Ysj_5
-    url: jdbc:mysql://microservce-db-ft-ff4b.h.aivencloud.com:20569/defaultdb?user=avnadmin
-    name: defaultdb
+    username: user
+    password: user123
+    url: jdbc:mysql://localhost:3306/course_db
+    name: course_db
   jpa:
     hibernate:
       ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQLDialect
+    properties:
+      hibernate.dialect: org.hibernate.dialect.MySQLDialect
   cache:
     type: redis
   data:
@@ -38,10 +39,11 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+      enabled: true
 
 logging:
   file:
-    name: ./../logs/${spring.application.name}.log
+    name: ./../data/logs/${spring.application.name}.log
 
 openapi:
   service:

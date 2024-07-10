@@ -9,4 +9,4 @@ eureka:
 
 logging:
   file:
-    name: ./../logs/${spring.application.name}.log
+    name: ./../data/logs/${spring.application.name}.log

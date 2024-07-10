@@ -7,6 +7,7 @@
         <groupId>com.projects</groupId>
         <artifactId>microservice-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath/>
     </parent>
 
     <artifactId>service-registry</artifactId>
@@ -29,14 +30,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-registry-prometheus</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-
 
     </dependencies>
     <dependencyManagement>

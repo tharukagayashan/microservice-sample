@@ -18,7 +18,8 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+      enabled: true
 
 logging:
   file:
-    name: ./../logs/${spring.application.name}.log
+    name: ./../data/logs/${spring.application.name}.log

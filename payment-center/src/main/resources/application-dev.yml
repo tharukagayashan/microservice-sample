@@ -1,11 +1,11 @@
 spring:
   data:
     mongodb:
-      database: payment-center
-      host: payment-center.n6pmcwl.mongodb.net
-      password: admin
-      username: admin
-      uri: mongodb+srv://admin:admin@payment-center.n6pmcwl.mongodb.net/payment-center?retryWrites=true&w=majority&appName=payment-center
+      database: payment_db
+      host: localhost
+      password: user123
+      username: user
+      uri: mongodb://user:user123@localhost:27017/payment_db?authSource=admin
 
 eureka:
   instance:
@@ -27,10 +27,11 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+      enabled: true
 
 logging:
   file:
-    name: ./../logs/${spring.application.name}.log
+    name: ./../data/logs/${spring.application.name}.log
 
 openapi:
   service:

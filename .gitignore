@@ -9,6 +9,7 @@
 
 /*.log
 /*.log.*
+/data/logs/*.log
 
 /.idea
 
@@ -34,3 +35,9 @@
 /notification-center/*.log.*
 
 /logs/*.log
+
+/data/grafana
+/data/mongo
+/data/mysql
+/data/redis
+/data/postgres
