@@ -55,3 +55,10 @@ springdoc:
     path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
+
+cors:
+  allowedOrigin: '*'
+  allowedMethods: '*'
+  allowedHeaders: '*'
+  allowedCredentials: 'false'
+  corsConfiguration: '/**'
