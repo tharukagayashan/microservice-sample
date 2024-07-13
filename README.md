@@ -6,6 +6,7 @@
 * Payment Center
 * Service Registry
 * Actuator Admin Server
+* Euraka Server
 
 # Features
 
@@ -14,5 +15,9 @@
 * Eureka server
 * Redis
 * Kafka
-
+* Prometheus and Grafana Monitoring
+* Zipkin and Sleuth Distributed Tracing
+* Resilience4j Circuit Breaker
+* Webflux webclient module intercommunication
 * K8 yml files
+* Dockerized complete project

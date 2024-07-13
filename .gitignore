@@ -37,6 +37,7 @@
 /data/logs
 
 /data/grafana
+/data/grafana/grafana.db
 /data/mongo
 /data/mongodb
 /data/mysql
