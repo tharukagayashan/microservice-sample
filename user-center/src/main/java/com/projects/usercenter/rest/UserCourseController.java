@@ -1,5 +1,6 @@
 package com.projects.usercenter.rest;
 
+import com.projects.usercenter.dto.UserCourseReqDto;
 import com.projects.usercenter.model.UserCourse;
 import com.projects.usercenter.service.UserCourseService;
 import lombok.extern.slf4j.Slf4j;
@@ -21,12 +22,11 @@ public class UserCourseController {
     }
 
     @PostMapping
-    public ResponseEntity<UserCourse> createCourseForUser(@RequestBody UserCourse userCourse) {
+    public ResponseEntity<UserCourse> createCourseForUser(@RequestBody UserCourseReqDto userCourseReqDto) {
         log.info("UserCourseController : createCourseForUser() called");
-        return userCourseService.createCourseForUser(userCourse);
+        return userCourseService.createCourseForUser(userCourseReqDto);
     }
 
-    @Cacheable(value = "UserCourseCache",key = "#userId")
     @GetMapping("/{userId}")
     public ResponseEntity<List<UserCourse>> getCourseForUser(@PathVariable Long userId) {
         log.info("UserCourseController : getCourseForUser() called");
