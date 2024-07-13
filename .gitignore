@@ -34,10 +34,11 @@
 /notification-center/*.log
 /notification-center/*.log.*
 
-/logs/*.log
+/data/logs
 
 /data/grafana
 /data/mongo
+/data/mongodb
 /data/mysql
 /data/redis
 /data/postgres

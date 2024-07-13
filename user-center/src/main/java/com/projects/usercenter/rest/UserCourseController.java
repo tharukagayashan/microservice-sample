@@ -5,6 +5,8 @@ import com.projects.usercenter.model.UserCourse;
 import com.projects.usercenter.service.UserCourseService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.BadRequestException;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,10 +24,14 @@ public class UserCourseController {
     }
 
     @PostMapping
-    @CircuitBreaker(name = "course-center")
+    @CircuitBreaker(name = "course-center",fallbackMethod = "fallbackMethod")
     public ResponseEntity<UserCourse> createCourseForUser(@RequestBody UserCourseReqDto userCourseReqDto) {
         log.info("UserCourseController : createCourseForUser() called");
         return userCourseService.createCourseForUser(userCourseReqDto);
+    }
+
+    public ResponseEntity<UserCourse> fallbackMethod(UserCourseReqDto userCourseReqDto, RuntimeException runtimeException) {
+        throw new RuntimeException("Oops! Something went wrong. Please try again later.");
     }
 
     @GetMapping("/{userId}")
