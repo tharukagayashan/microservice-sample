@@ -79,10 +79,17 @@
             <version>${springdoc-openapi.version}</version>
         </dependency>
 
+        <!-- Micrometer Prometheus -->
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
             <scope>runtime</scope>
+        </dependency>
+
+        <!-- Recellence  -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
         </dependency>
 
     </dependencies>

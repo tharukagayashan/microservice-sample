@@ -3,8 +3,10 @@ package com.projects.usercenter.rest;
 import com.projects.usercenter.dto.UserCourseReqDto;
 import com.projects.usercenter.model.UserCourse;
 import com.projects.usercenter.service.UserCourseService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
+import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,9 +24,16 @@ public class UserCourseController {
     }
 
     @PostMapping
+    @CircuitBreaker(name = "course-center", fallbackMethod = "fallbackMethod")
+    @TimeLimiter(name = "course-center")
+    @Retry(name = "course-center")
     public ResponseEntity<UserCourse> createCourseForUser(@RequestBody UserCourseReqDto userCourseReqDto) {
         log.info("UserCourseController : createCourseForUser() called");
         return userCourseService.createCourseForUser(userCourseReqDto);
+    }
+
+    public ResponseEntity<UserCourse> fallbackMethod(UserCourseReqDto userCourseReqDto, RuntimeException runtimeException) {
+        throw new RuntimeException("Oops! Something went wrong. Please try again later.");
     }
 
     @GetMapping("/{userId}")
