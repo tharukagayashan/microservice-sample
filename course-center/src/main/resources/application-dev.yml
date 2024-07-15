@@ -18,6 +18,14 @@ spring:
       port: 6379
       database: 0
       timeout: 3000
+  cloud:
+    compatibility-verifier:
+      enabled: false
+  zipkin:
+    base-url: http://127.0.0.1:9411
+  sleuth:
+    sampler:
+      probability: 1.0
 
 eureka:
   instance:
@@ -44,6 +52,9 @@ management:
 logging:
   file:
     name: ./../data/logs/${spring.application.name}.log
+  level:
+    org:
+      springframework: DEBUG
 
 openapi:
   service:

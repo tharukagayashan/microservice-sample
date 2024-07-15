@@ -25,8 +25,8 @@ public class UserCourseController {
 
     @PostMapping
     @CircuitBreaker(name = "course-center", fallbackMethod = "fallbackMethod")
-    @TimeLimiter(name = "course-center")
-    @Retry(name = "course-center")
+//    @TimeLimiter(name = "course-center")
+//    @Retry(name = "course-center")
     public ResponseEntity<UserCourse> createCourseForUser(@RequestBody UserCourseReqDto userCourseReqDto) {
         log.info("UserCourseController : createCourseForUser() called");
         return userCourseService.createCourseForUser(userCourseReqDto);

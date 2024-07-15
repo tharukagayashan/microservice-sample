@@ -6,6 +6,14 @@ spring:
       password: user123
       username: user
       uri: mongodb://user:user123@localhost:27017/payment_db?authSource=admin
+  cloud:
+    compatibility-verifier:
+      enabled: false
+  zipkin:
+    base-url: http://127.0.0.1:9411
+  sleuth:
+    sampler:
+      probability: 1.0
 
 eureka:
   instance:
@@ -32,6 +40,9 @@ management:
 logging:
   file:
     name: ./../data/logs/${spring.application.name}.log
+  level:
+    org:
+      springframework: DEBUG
 
 openapi:
   service:

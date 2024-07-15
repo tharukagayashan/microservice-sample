@@ -16,6 +16,9 @@ eureka:
 logging:
   file:
     name: ./../data/logs/${spring.application.name}.log
+  level:
+    org:
+      springframework: DEBUG
 
 management:
   endpoints:
@@ -26,3 +29,13 @@ management:
     health:
       show-details: ALWAYS
       enabled: true
+
+spring:
+  cloud:
+    compatibility-verifier:
+      enabled: false
+  zipkin:
+    base-url: http://127.0.0.1:9411
+  sleuth:
+    sampler:
+      probability: 1.0
