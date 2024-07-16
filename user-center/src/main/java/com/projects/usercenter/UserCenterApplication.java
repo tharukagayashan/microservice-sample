@@ -3,7 +3,6 @@ package com.projects.usercenter;
 import com.projects.usercenter.dao.UserCourseRepository;
 import com.projects.usercenter.dao.UserRepository;
 import com.projects.usercenter.model.User;
-import com.projects.usercenter.model.UserCourse;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
