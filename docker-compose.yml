@@ -61,6 +61,16 @@ services:
     networks:
       - eureka-network
 
+    # Zipkin Sleuth Server
+  zipkin-sleuth-server:
+    container_name: zipkin-sleuth-server
+    image: openzipkin/zipkin:latest
+    ports:
+      - "9411:9411"
+    restart: unless-stopped
+    networks:
+      - eureka-network
+
   # Eureka Server
   discovery-server:
     container_name: discovery-server
@@ -70,6 +80,7 @@ services:
       - "8761:8761"
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - SPRING_ZIPKIN_BASEURL=http://zipkin-sleuth-server:9411
     networks:
       - eureka-network
 
@@ -82,6 +93,7 @@ services:
       - "9090:9090"
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - SPRING_ZIPKIN_BASEURL=http://zipkin-sleuth-server:9411
     depends_on:
       - discovery-server
     networks:
@@ -97,6 +109,7 @@ services:
     environment:
       - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY=TRACE
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - SPRING_ZIPKIN_BASEURL=http://zipkin-sleuth-server:9411
     depends_on:
       - discovery-server
     networks:
@@ -117,6 +130,7 @@ services:
       - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.PostgreSQLDialect
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
       - SPRING_DATA_REDIS_HOST=redis-cache
+      - SPRING_ZIPKIN_BASEURL=http://zipkin-sleuth-server:9411
     depends_on:
       - discovery-server
       - api-gateway
@@ -137,6 +151,7 @@ services:
       - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.MySQLDialect
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
       - SPRING_DATA_REDIS_HOST=redis-cache
+      - SPRING_ZIPKIN_BASEURL=http://zipkin-sleuth-server:9411
     depends_on:
       - discovery-server
       - api-gateway
@@ -154,6 +169,7 @@ services:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
       - SPRING_DATA_MONGODB_URI=mongodb://user:user123@payment-mongodb-db:27017/payment_db?authSource=admin
       - SPRING_DATA_MONGODB_DATABASE=payment_db
+      - SPRING_ZIPKIN_BASEURL=http://zipkin-sleuth-server:9411
     depends_on:
       - discovery-server
       - api-gateway
@@ -171,6 +187,7 @@ services:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
       - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=*
       - MANAGEMENT_ENDPOINT_HEALTH_SHOW-DETAILS=ALWAYS
+      - SPRING_ZIPKIN_BASEURL=http://zipkin-sleuth-server:9411
     depends_on:
       - discovery-server
       - api-gateway
@@ -185,11 +202,11 @@ services:
       - "9091:9090"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
-#    depends_on:
-#      - user-center
-#      - course-center
-#      - payment-center
-#      - notification-center
+    #    depends_on:
+    #      - user-center
+    #      - course-center
+    #      - payment-center
+    #      - notification-center
     restart: unless-stopped
     networks:
       - eureka-network

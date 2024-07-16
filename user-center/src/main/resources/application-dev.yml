@@ -18,6 +18,14 @@ spring:
       port: 6379
       database: 0
       timeout: 3000
+  cloud:
+    compatibility-verifier:
+      enabled: false
+  zipkin:
+    base-url: http://localhost:9411
+  sleuth:
+    sampler:
+      probability: 1.0
 
 # Eureka Config
 eureka:
@@ -75,6 +83,7 @@ logging:
   file:
     name: ./../data/logs/${spring.application.name}.log
 
+
 # Swagger Config
 openapi:
   service:
@@ -94,3 +103,4 @@ cors:
   allowedHeaders: '*'
   allowedCredentials: 'false'
   corsConfiguration: '/**'
+

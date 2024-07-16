@@ -17,6 +17,7 @@ logging:
   file:
     name: ./../data/logs/${spring.application.name}.log
 
+
 management:
   endpoints:
     web:
