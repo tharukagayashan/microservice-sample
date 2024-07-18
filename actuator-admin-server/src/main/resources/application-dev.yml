@@ -16,6 +16,8 @@ eureka:
 logging:
   file:
     name: ./../data/logs/${spring.application.name}.log
+  level:
+    org.springframework: DEBUG
 
 
 management:
