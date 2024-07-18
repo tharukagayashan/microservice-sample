@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 services:
   # MySQL Docker Compose
   course-mysql-db:
@@ -62,8 +62,8 @@ services:
       - eureka-network
 
     # Zipkin Sleuth Server
-  zipkin-sleuth-server:
-    container_name: zipkin-sleuth-server
+  zipkin-sleuth:
+    container_name: zipkin
     image: openzipkin/zipkin:latest
     ports:
       - "9411:9411"
@@ -75,12 +75,10 @@ services:
   discovery-server:
     container_name: discovery-server
     image: registry.hub.docker.com/tharukagayashan/service-registry:latest
-    pull_policy: always
     ports:
       - "8761:8761"
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
-      - SPRING_ZIPKIN_BASEURL=http://zipkin-sleuth-server:9411
     networks:
       - eureka-network
 
@@ -88,12 +86,10 @@ services:
   actuator-admin:
     container_name: actuator-admin-server
     image: registry.hub.docker.com/tharukagayashan/actuator-admin-server:latest
-    pull_policy: always
     ports:
       - "9090:9090"
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
-      - SPRING_ZIPKIN_BASEURL=http://zipkin-sleuth-server:9411
     depends_on:
       - discovery-server
     networks:
@@ -103,13 +99,13 @@ services:
   api-gateway:
     container_name: api-gateway
     image: registry.hub.docker.com/tharukagayashan/api-gateway:latest
-    pull_policy: always
     ports:
       - "8765:8765"
     environment:
       - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY=TRACE
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
-      - SPRING_ZIPKIN_BASEURL=http://zipkin-sleuth-server:9411
+      - SPRING_ZIPKIN_BASE-URL=http://zipkin:9411
+      - SPRING_SLEUTH_SAMPLER_PROBABILITY=1.0
     depends_on:
       - discovery-server
     networks:
@@ -119,7 +115,6 @@ services:
   user-center:
     container_name: user-center
     image: registry.hub.docker.com/tharukagayashan/user-center:latest
-    pull_policy: always
     ports:
       - "8084:8084"
     environment:
@@ -130,7 +125,8 @@ services:
       - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.PostgreSQLDialect
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
       - SPRING_DATA_REDIS_HOST=redis-cache
-      - SPRING_ZIPKIN_BASEURL=http://zipkin-sleuth-server:9411
+      - SPRING_ZIPKIN_BASE-URL=http://zipkin:9411
+      - SPRING_SLEUTH_SAMPLER_PROBABILITY=1.0
     depends_on:
       - discovery-server
       - api-gateway
@@ -141,7 +137,6 @@ services:
   course-center:
     container_name: course-center
     image: registry.hub.docker.com/tharukagayashan/course-center:latest
-    pull_policy: always
     ports:
       - "8082:8082"
     environment:
@@ -151,7 +146,8 @@ services:
       - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.MySQLDialect
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
       - SPRING_DATA_REDIS_HOST=redis-cache
-      - SPRING_ZIPKIN_BASEURL=http://zipkin-sleuth-server:9411
+      - SPRING_ZIPKIN_BASE-URL=http://zipkin:9411
+      - SPRING_SLEUTH_SAMPLER_PROBABILITY=1.0
     depends_on:
       - discovery-server
       - api-gateway
@@ -162,14 +158,14 @@ services:
   payment-center:
     container_name: payment-center
     image: registry.hub.docker.com/tharukagayashan/payment-center:latest
-    pull_policy: always
     ports:
       - "8083:8083"
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
       - SPRING_DATA_MONGODB_URI=mongodb://user:user123@payment-mongodb-db:27017/payment_db?authSource=admin
       - SPRING_DATA_MONGODB_DATABASE=payment_db
-      - SPRING_ZIPKIN_BASEURL=http://zipkin-sleuth-server:9411
+      - SPRING_ZIPKIN_BASE-URL=http://zipkin:9411
+      - SPRING_SLEUTH_SAMPLER_PROBABILITY=1.0
     depends_on:
       - discovery-server
       - api-gateway
@@ -180,14 +176,14 @@ services:
   notification-center:
     container_name: notification-center
     image: registry.hub.docker.com/tharukagayashan/notification-center:latest
-    pull_policy: always
     ports:
       - "8085:8085"
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
       - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=*
       - MANAGEMENT_ENDPOINT_HEALTH_SHOW-DETAILS=ALWAYS
-      - SPRING_ZIPKIN_BASEURL=http://zipkin-sleuth-server:9411
+      - SPRING_ZIPKIN_BASE-URL=http://zipkin:9411
+      - SPRING_SLEUTH_SAMPLER_PROBABILITY=1.0
     depends_on:
       - discovery-server
       - api-gateway
@@ -202,11 +198,11 @@ services:
       - "9091:9090"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
-    #    depends_on:
-    #      - user-center
-    #      - course-center
-    #      - payment-center
-    #      - notification-center
+    depends_on:
+      - user-center
+      - course-center
+      - payment-center
+      - notification-center
     restart: unless-stopped
     networks:
       - eureka-network

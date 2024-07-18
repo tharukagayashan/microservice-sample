@@ -82,6 +82,8 @@ resilience4j:
 logging:
   file:
     name: ./../data/logs/${spring.application.name}.log
+  level:
+    org.springframework: DEBUG
 
 
 # Swagger Config
