@@ -20,6 +20,6 @@ spec:
     spec:
       containers:
         - name: payment-center
-          image: us.gcr.io/active-sun-419904/payment-center:v1
+          image: us.gcr.io/gcloud-test-429808/payment-center:latest
           ports:
             - containerPort: 8083

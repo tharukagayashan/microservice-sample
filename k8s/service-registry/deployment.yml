@@ -20,6 +20,6 @@ spec:
     spec:
       containers:
         - name: service-registry
-          image: us.gcr.io/active-sun-419904/service-registry:v1
+          image: us.gcr.io/gcloud-test-429808/service-registry:latest
           ports:
             - containerPort: 8761
