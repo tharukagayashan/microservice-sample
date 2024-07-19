@@ -74,7 +74,7 @@ services:
   # Eureka Server
   discovery-server:
     container_name: discovery-server
-    image: registry.hub.docker.com/tharukagayashan/service-registry:latest
+    image: us.gcr.io/gcloud-test-429808/service-registry:latest
     ports:
       - "8761:8761"
     environment:
@@ -85,7 +85,7 @@ services:
   # Actuator Admin Server
   actuator-admin:
     container_name: actuator-admin-server
-    image: registry.hub.docker.com/tharukagayashan/actuator-admin-server:latest
+    image: us.gcr.io/gcloud-test-429808/actuator-admin-server:latest
     ports:
       - "9090:9090"
     environment:
@@ -98,7 +98,7 @@ services:
   # API Gateway
   api-gateway:
     container_name: api-gateway
-    image: registry.hub.docker.com/tharukagayashan/api-gateway:latest
+    image: us.gcr.io/gcloud-test-429808/api-gateway:latest
     ports:
       - "8765:8765"
     environment:
@@ -114,7 +114,7 @@ services:
   # User Center
   user-center:
     container_name: user-center
-    image: registry.hub.docker.com/tharukagayashan/user-center:latest
+    image: us.gcr.io/gcloud-test-429808/user-center:latest
     ports:
       - "8084:8084"
     environment:
@@ -136,7 +136,7 @@ services:
   # Course Center
   course-center:
     container_name: course-center
-    image: registry.hub.docker.com/tharukagayashan/course-center:latest
+    image: us.gcr.io/gcloud-test-429808/course-center:latest
     ports:
       - "8082:8082"
     environment:
@@ -157,7 +157,7 @@ services:
   # Payment Center
   payment-center:
     container_name: payment-center
-    image: registry.hub.docker.com/tharukagayashan/payment-center:latest
+    image: us.gcr.io/gcloud-test-429808/payment-center:latest
     ports:
       - "8083:8083"
     environment:
@@ -175,7 +175,7 @@ services:
   # Notification Center
   notification-center:
     container_name: notification-center
-    image: registry.hub.docker.com/tharukagayashan/notification-center:latest
+    image: us.gcr.io/gcloud-test-429808/notification-center:latest
     ports:
       - "8085:8085"
     environment:

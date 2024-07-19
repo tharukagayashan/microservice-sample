@@ -20,6 +20,6 @@ spec:
     spec:
       containers:
         - name: notification-center
-          image: us.gcr.io/active-sun-419904/notification-center:v1
+          image: us.gcr.io/gcloud-test-429808/notification-center:latest
           ports:
             - containerPort: 8085

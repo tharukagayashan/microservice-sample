@@ -20,6 +20,6 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: us.gcr.io/active-sun-419904/api-gateway:v1
+          image: us.gcr.io/gcloud-test-429808/api-gateway:latest
           ports:
             - containerPort: 8765

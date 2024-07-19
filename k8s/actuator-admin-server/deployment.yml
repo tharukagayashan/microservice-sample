@@ -20,6 +20,6 @@ spec:
     spec:
       containers:
         - name: actuator-admin-server
-          image: us.gcr.io/active-sun-419904/actuator-admin-server:v1
+          image: us.gcr.io/gcloud-test-429808/actuator-admin-server:latest
           ports:
             - containerPort: 9090
